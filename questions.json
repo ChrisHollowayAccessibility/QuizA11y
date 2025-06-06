@@ -53,7 +53,7 @@
     {"id": 51, "question": "What does the acronym P.O.U.R. stand for in WCAG?", "options": ["Perceivable, Operable, Understandable, Robust", "Practical, Organized, Usable, Reliable"], "correct": 0},
     {"id": 52, "question": "Which WCAG principle addresses text alternatives?", "options": ["Perceivable", "Operable"], "correct": 0},
     {"id": 53, "question": "What is the minimum contrast ratio for graphical objects according to WCAG AA?", "options": ["3:1", "4.5:1"], "correct": 0},
-    {"id": 54, "question": "What does success criterion 1.1.1 focus on?", "options": ["Non-text Content", "Text Alternatives"], "correct": 1},
+    {"id": 54, "question": "What does success criterion 1.1.1 focus on?", "options": ["Non-text Content", "Text Alternatives"], "correct": 0},
     {"id": 55, "question": "Which guideline addresses the accessibility of multimedia content?", "options": ["Guideline 1.3", "Guideline 2.1"], "correct": 0},
     {"id": 56, "question": "What is the purpose of success criterion 1.4.4?", "options": ["Resize text", "Contrast ratio"], "correct": 0},
     {"id": 57, "question": "Which WCAG level is the highest?", "options": ["AA", "AAA"], "correct": 1},
