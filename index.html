@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SRD27SLJZW"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SRD27SLJZW');
+</script><meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessibility Quiz</title>
+	<style type="text/css">body {
+            font-family: Arial, sans-serif;
+            background-color: #ffa500;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .container {
+            background-color: white;
+            width: 90%;
+            max-width: 1200px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #000;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2.0em;
+            color: #000;
+            margin-bottom: 20px;
+        }
+        .question {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: auto;
+        }
+        .options button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 1.3em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: left;
+Width: 100%;
+        }
+        .options button:hover {
+            background-color: #464646;
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+        }
+        .options button:focus {
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+            border-left: solid;
+            border-width: 20px;
+            border-color: #ffa500;
+            content: "→"; /* Add an arrow symbol */
+            position: relative;
+        }
+        .message {
+            display: none;
+            margin-top: 20px;
+            font-size: 2rem;
+            color: green;
+        }
+
+        .messageincorrect {
+            display: none;
+            margin-top: 20px;
+            font-size: 2rem;
+            color: red;
+        }
+
+        .next-question-btn {
+            display: none;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .next-question-btn:focus {
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+            
+        }
+        .next-question-btn:hover {
+            background-color: #218838;
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+        }
+        .score {
+            margin-top: 20px;
+            font-size: 2.2em;
+            color: #333;
+        }
+        #leaderboardForm {
+            display: none;
+            margin-top: 20px;
+        }
+        #name {
+            width: calc(30% - 22px);
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        #leaderboardForm button {
+            margin-top: 10px;
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #leaderboardForm button:hover {
+            background-color: #0056b3;
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+        }
+        .leaderboard {
+            display: none;
+            margin-top: 20px;
+        }
+        .leaderboard ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .leaderboard li {
+            font-size: 1em;
+            margin: 5px 0;
+        }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        #name:focus-visible {
+            outline: 2px solid #ffa500;
+            outline-offset: 2px;
+        }
+        h1:focus {
+            outline: none;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #000;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        /* Search Box */
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Leaderboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.1em;
+        }
+
+        /* Alternating Row Colors */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Hover effect for rows */
+        tr:hover {
+            background-color: #f1f1f1;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            width: 250px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+         button {
+            margin: 5px;
+
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+                    
+        .button-container {
+            text-align: center;
+        }
+
+        /* Responsive Table */
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                text-align: left;
+                font-weight: bold;
+            }
+
+
+        }
+	</style>
+</head>
+<body>
+<div class="container" role="application">
+<h1 id="main-heading" tabindex="-1">Accessibility Quiz [Beta]</h1>
+
+<h2>Question</h2>
+
+<div aria-labelledby="question, options" aria-live="polite" class="question" id="question" role="heading"></div>
+
+<div aria-hidden="true" id="announcement" style="position: absolute; left: -9999px;"></div>
+
+<div aria-labelledby="question" class="options" id="options" role="group"></div>
+
+<div class="message" id="wellDoneMessage" role="alert">Correct Answer!</div>
+
+<div class="messageincorrect" id="unluckyMessage" role="alert">Incorrect Answer!</div>
+
+<div class="message" id="showCorrectAnswer" role="alert" style="color: grey;"></div>
+<button aria-live="polite" class="next-question-btn" id="nextQuestionBtn" onclick="loadNextQuestion()">Next Question</button>
+
+<div class="score" id="scoreDisplay" role="status">Your Current Score: 0</div>
+
+<div id="leaderboardForm"><label for="name">Enter your name for the leaderboard:</label><br />
+<input aria-required="true" id="name" placeholder="Your name" type="text" /><button onclick="submitScore()">Submit</button><button onclick="window.location.href='index.html'">Try Again</button></div>
+<script>
+        let questions = [];
+        let score = 0;
+        let currentQuestionIndex = -1;
+
+        // Fetch questions from JSON file
+        fetch('questions.json')
+            .then(response => response.json())
+            .then(data => {
+                questions = data;
+                loadNextQuestion(); // Load the first question when questions are fetched
+            })
+            .catch(error => console.error('Error fetching questions:', error));
+            
+        // Load Question Script
+        function loadNextQuestion() {
+            document.getElementById('wellDoneMessage').style.display = 'none';
+            document.getElementById('showCorrectAnswer').style.display = 'none';
+            document.getElementById('nextQuestionBtn').style.display = 'none';
+            document.getElementById('leaderboardForm').style.display = 'none';
+
+            document.getElementById('options').style.display = 'block';
+
+            currentQuestionIndex = Math.floor(Math.random() * questions.length);
+            const currentQuestion = questions[currentQuestionIndex];
+
+            document.getElementById('question').innerText = currentQuestion.question;
+
+            const announcementText = `Here is the question: ${currentQuestion.question}. Here are ${currentQuestion.options.length} options.`;
+            const announcementElement = document.getElementById('announcement');
+
+            announcementElement.innerText = announcementText;
+            setTimeout(() => {
+                announcementElement.innerText = '';
+            }, 100);
+
+            const optionsElement = document.getElementById('options');
+            optionsElement.innerHTML = ''; // Clear previous options
+
+            optionsElement.setAttribute('aria-label', `Use the tab key to select an answer from the ${currentQuestion.options.length} options.`);
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                
+                const hiddenText = document.createElement('span');
+                hiddenText.className = 'visually-hidden';
+                hiddenText.innerText = `Option ${index + 1} of ${currentQuestion.options.length}: `;
+                button.appendChild(hiddenText);
+
+                button.appendChild(document.createTextNode(option));
+                button.onclick = () => checkAnswer(index);
+                button.setAttribute('aria-pressed', 'false');
+                optionsElement.appendChild(button);
+                
+                                if (index === 0) {
+                    question.focus();
+                }
+
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const correctIndex = questions[currentQuestionIndex].correct;
+            const selectedAnswer = questions[currentQuestionIndex].options[selectedIndex];
+            const correctAnswerText = questions[currentQuestionIndex].options[correctIndex];
+
+            const isCorrect = selectedIndex === correctIndex;
+
+            if (isCorrect) {
+                score++;
+
+                document.getElementById('showCorrectAnswer').style.display = 'block';
+
+                document.getElementById('showCorrectAnswer').innerText = `You selected the correct answer which was: ${correctAnswerText}`;
+
+                document.getElementById('wellDoneMessage').style.display = 'block';
+                document.getElementById('nextQuestionBtn').style.display = 'inline-block';
+                updateScore();
+                document.getElementById('nextQuestionBtn').focus();
+
+
+                document.getElementById('options').style.display = 'none';
+
+            } else {
+                document.getElementById('unluckyMessage').style.display = 'block';
+                document.getElementById('showCorrectAnswer').innerText = `You selected the wrong answer the correct answer was: ${correctAnswerText}`;
+                document.getElementById('showCorrectAnswer').style.display = 'block';
+                document.getElementById('leaderboardForm').style.display = 'block';
+                document.getElementById('options').style.display = 'none';
+            }
+
+            // Send answer details to the server
+            recordAnswer(currentQuestionIndex, selectedAnswer, isCorrect);
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').innerText = `Your Current Score: ${score}`;
+        }
+
+        function recordAnswer(questionId, selectedAnswer, isCorrect) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "record_answer.php", true);  // Adjust the path if necessary
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log('Answer recorded successfully.');
+                } else if (xhr.readyState === 4) {
+                    console.error('Error recording answer:', xhr.statusText);
+                }
+            };
+
+            // Send data to the server
+            xhr.send("question_id=" + encodeURIComponent(questionId) +
+                    "&selected_answer=" + encodeURIComponent(selectedAnswer) +
+                    "&is_correct=" + encodeURIComponent(isCorrect));
+        }
+
+        function submitScore() {
+    const name = document.getElementById('name').value;
+    if (name.trim() === '') {
+        alert("Please enter your name to submit your score.");
+        return;
+    }
+
+    // Send score to the server
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "submit_score.php", true);  // Adjust the path if necessary
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Redirect to leaderboard.html after submission
+            window.location.href = "leaderboard.html";  // Redirect to the existing leaderboard
+        } else if (xhr.readyState === 4) {
+            console.error('Error submitting score:', xhr.statusText);
+        }
+    };
+
+    // Send data to the server
+    xhr.send("name=" + encodeURIComponent(name) + "&score=" + encodeURIComponent(score));
+}
+    </script></div>
+</body>
+</html>

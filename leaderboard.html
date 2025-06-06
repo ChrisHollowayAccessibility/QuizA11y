@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-SRD27SLJZW"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SRD27SLJZW');
+</script><meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Global Leaderboard</title>
+	<style type="text/css">/* General Page Styling */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #FFA500;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #000;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        /* Search Box */
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Leaderboard Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #000;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.1em;
+        }
+
+        /* Alternating Row Colors */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Hover effect for rows */
+        tr:hover {
+            background-color: #f1f1f1;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Button Styling */
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Responsive Table */
+        @media screen and (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            
+            th {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            td {
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+	</style>
+</head>
+<body>
+<h1>Global Leaderboard</h1>
+<!-- Search Section -->
+
+<div class="search-container"><label for="search">Player Search:</label> <input id="search" placeholder="Search by player name..." type="text" /></div>
+<!-- Top 10 Players Table -->
+
+<h2>Top 10 Players</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>Name</th>
+			<th>Score</th>
+			<th>Date Taken</th>
+		</tr>
+	</thead>
+	<tbody id="top10"><!-- Top 10 Scores will be dynamically inserted here -->
+	</tbody>
+</table>
+<!-- All Players Table -->
+
+<h2>All Players</h2>
+
+<table>
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>Name</th>
+			<th>Score</th>
+			<th>Date Taken</th>
+		</tr>
+	</thead>
+	<tbody id="leaderboard"><!-- All Players will be dynamically inserted here -->
+	</tbody>
+</table>
+<!-- Try Again Button -->
+
+<p><a class="btn" href="index.html">Try Again</a> <script>
+        // Function to fetch and display leaderboard scores
+        function loadLeaderboard() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'leaderboard.php', true); // Fetch from leaderboard.php
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const scores = JSON.parse(xhr.responseText);
+
+                    // Handle the case where no scores are found
+                    if (scores.error) {
+                        document.getElementById('leaderboard').innerHTML = `<tr><td colspan="4">${scores.error}</td></tr>`;
+                        return;
+                    }
+
+                    // Sort the scores by 'score' in descending order
+                    scores.sort(function (a, b) {
+                        return b.score - a.score; // Sort from highest to lowest
+                    });
+
+                    // Clear existing content in both sections
+                    document.getElementById('top10').innerHTML = '';
+                    document.getElementById('leaderboard').innerHTML = '';
+
+                    // Insert the top 10 scores with rank
+                    scores.slice(0, 10).forEach(function (score, index) {
+                        const topRow = `
+                            <tr>
+                                <td data-label="Rank">${index + 1}</td>
+                                <td data-label="Name">${score.name}</td>
+                                <td data-label="Score">${score.score}</td>
+                                <td data-label="Date Taken">${score.date_taken}</td>
+                            </tr>
+                        `;
+                        document.getElementById('top10').innerHTML += topRow;
+                    });
+
+                    // Insert the remaining players with rank starting from 11
+                    scores.slice(10).forEach(function (score, index) {
+                        const rank = index + 11; // Adjust rank for players after top 10
+                        const row = `
+                            <tr>
+                                <td data-label="Rank">${rank}</td>
+                                <td data-label="Name">${score.name}</td>
+                                <td data-label="Score">${score.score}</td>
+                                <td data-label="Date Taken">${score.date_taken}</td>
+                            </tr>
+                        `;
+                        document.getElementById('leaderboard').innerHTML += row;
+                    });
+                } else {
+                    console.error("Error loading leaderboard: " + xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function () {
+                console.error("Request failed.");
+            };
+
+            xhr.send();
+        }
+
+        // Function to filter leaderboard based on search input
+        function filterLeaderboard() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const allRows = document.querySelectorAll('#leaderboard tr, #top10 tr');
+
+            allRows.forEach(row => {
+                const playerName = row.querySelector('td[data-label="Name"]')?.textContent.toLowerCase() || '';
+                if (playerName.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Load leaderboard when page loads
+        window.onload = loadLeaderboard;
+
+        // Search input event listener
+        document.getElementById('search').addEventListener('input', filterLeaderboard);
+    </script></p>
+</body>
+</html>
